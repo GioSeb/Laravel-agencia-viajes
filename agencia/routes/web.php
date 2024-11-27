@@ -104,5 +104,36 @@ Route::post('/destino/store', function(){
                 'mensaje'=>'No se pudo agregar el destino: '.$aeropuerto
             ]
             );
-    };
+};
+
+});
+
+Route::get('/region/create', function(){
+    return view('regionCreate');
+});
+
+Route::post('/region/store', function () {
+    $nombre = request('nombre');
+
+    try {
+        DB::table('regiones')
+        ->insert([
+            'nombre'=>$nombre
+        ]);
+        return redirect('/regiones')
+        ->with(
+            [
+                'css'=>'green',
+                'mensaje'=>'Region:' .$nombre. ' agregado correctamente',
+            ]
+            );
+    } catch (\Throwable $th) {
+        return redirect('/regiones')
+        ->with(
+            [
+                'css'=>'red',
+                'mensaje'=>'No se pudo agregar el destino: '.$nombre
+            ]
+            );
+    }
 });
