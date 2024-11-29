@@ -137,3 +137,18 @@ Route::post('/region/store', function () {
             );
     }
 });
+
+Route::get('/destino/edit/{idDestino}', function($idDestino)
+{
+    //Obtenemos listado de regiones
+    $regiones = DB::table('regiones')->get();
+    //Obtenemos datos de destino por id
+    $destino = DB::table('destinos')
+                        ->where('idDestino', $idDestino)
+                        ->first();
+    //Retornamos la vista pasandole estos datos
+    return view('destinoEdit', [
+        'regiones'=>$regiones,
+        'destino'=>$destino
+    ]);
+});
